@@ -1,9 +1,10 @@
 import express from "express";
 import morgan from "morgan";
 import { Server as SocketServer } from "socket.io";
-import http from "http";
+import http, { maxHeaderSize } from "http";
 import cors from "cors";
 import { PORT } from "./config.js";
+import { measureMemory } from "vm";
 
 const app = express();
 const server = http.createServer(app);
@@ -17,8 +18,14 @@ app.use(cors());
 app.use(morgan("dev"));
 
 io.on('connection', (socket)=>{
-    console.log(socket.id)
+
+    socket.on('message', message =>{
+        console.log(message)
+        socket.broadcast.emit('message', message)
+    }) 
 })
+
+
 
 server.listen(PORT);
 console.log("server start", PORT);
