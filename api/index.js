@@ -4,9 +4,11 @@ import { Server as SocketServer } from "socket.io";
 import http, { maxHeaderSize } from "http";
 import cors from "cors";
 import { PORT } from "./config.js";
-import { measureMemory } from "vm";
+import {dirname, join} from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const server = http.createServer(app);
 const io = new SocketServer(server, {
   cors: {
@@ -26,6 +28,8 @@ io.on("connection", (socket) => {
     });
   });
 });
+
+app.use(express.static(join(__dirname, "../client/build")))
 
 server.listen(PORT);
 console.log("server start", PORT);
