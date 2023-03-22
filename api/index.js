@@ -8,24 +8,24 @@ import { measureMemory } from "vm";
 
 const app = express();
 const server = http.createServer(app);
-const io = new SocketServer(server,{
-    cors: {
-        origin:'*'
-    }
+const io = new SocketServer(server, {
+  cors: {
+    origin: "*",
+  },
 });
 
 app.use(cors());
 app.use(morgan("dev"));
 
-io.on('connection', (socket)=>{
-
-    socket.on('message', message =>{
-        console.log(message)
-        socket.broadcast.emit('message', message)
-    }) 
-})
-
-
+io.on("connection", (socket) => {
+  socket.on("message", (message) => {
+    console.log(message);
+    socket.broadcast.emit("message", {
+      body: message,
+      from: socket.id,
+    });
+  });
+});
 
 server.listen(PORT);
 console.log("server start", PORT);
