@@ -25,6 +25,7 @@ function App() {
 
 
   const handleSubmit = (e) => {
+    if(message === '') return
     e.preventDefault();
     const newMessage = {
       body: message,
