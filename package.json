@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node api/index.js",
-    "dev":"nodemon api/index.js",
-    "build":"npm --prefix client install && npm run --prefix client build"
+    "dev": "nodemon api/index.js",
+    "build": "npm --prefix client install && npm run --prefix client build"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mongoose": "^7.0.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.21",
     "socket.io": "^4.6.1"

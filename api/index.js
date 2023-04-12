@@ -6,6 +6,7 @@ import cors from "cors";
 import { PORT } from "./config.js";
 import {dirname, join} from "path";
 import { fileURLToPath } from "url";
+import connection  from "./src/Database/"
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -26,10 +27,22 @@ io.on("connection", (socket) => {
       body: message,
       from: socket.id,
     });
+    
   });
 });
 
 app.use(express.static(join(__dirname, "../client/build")))
 
-server.listen(PORT);
-console.log("server start", PORT);
+server.listen(PORT, async ()=>{
+  try{
+    console.log("server start", PORT);
+    await connection()
+    console.log()
+
+  }catch(e){
+    console.error(e)
+  }
+
+});
+
+
