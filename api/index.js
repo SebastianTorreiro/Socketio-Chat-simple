@@ -6,12 +6,13 @@ import cors from "cors";
 import { PORT } from "./config.js";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import { config } from 'dotenv'
+import mongoose from "mongoose";
+import router from "./src/Routes/index.js";
+// import { config } from "dotenv";
 // import { DB_PASSWORD } from "./config.js";
 
 // import connection  from "./src/Database/index.js"
 
-import mongoose from "mongoose";
 const password = "wsdy450usdtLz89b";
 
 const uri = `mongodb+srv://sebastian:${password}@cluster0.ji8l9rz.mongodb.net/?retryWrites=true&w=majority`;
@@ -38,7 +39,9 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use(express.static(join(__dirname, "../client/build")));
+// app.use(express.static(join(__dirname, "../client/build")));
+
+app.use("/", router);
 
 server.listen(PORT, async () => {
   try {
