@@ -1,16 +1,15 @@
-import User from "../Models/User.js"
+import User from "../Models/User.js";
 
-class UserService{
+class UserService {
+  async createUser(email, password) {
+    try {
+      const userCreated = new User({ password, email });
+      userCreated.save();
+      return userCreated;
+    } catch (error) {
+      return error;
+    }
+  }
+}
 
-async createUser(email, password){
-try {
-    const userCreated = new User({email, password})
-    userCreated.save()
-    return userCreated
-} catch (error) {
-    return error
-}
-}
-}
-
-export default UserService
+export default UserService;
