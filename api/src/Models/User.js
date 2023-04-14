@@ -8,7 +8,7 @@ const schema = new Schema(
     email: { 
         type: String
      },
-    passwordHash: {
+    password: {
         type: String
     },
     rol: { 
