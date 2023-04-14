@@ -3,7 +3,8 @@ import Message from "../Models/Message";
 class MessageService{
 
 
-async getAllMessageFromOneUser(){
+async getAllMessageFromOneUser(req, res){
+const {content, user} = req.body
 
 }
 
