@@ -1,5 +1,5 @@
 
 
-export default getAllMessagesFromOneUser = (req, res) =>{
+export function getAllMessagesFromOneUser(req, res){
     res.json('funciona')
 }
