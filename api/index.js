@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 import morgan from "morgan";
 import { Server as SocketServer } from "socket.io";
 import http, { maxHeaderSize } from "http";
@@ -25,7 +25,7 @@ const io = new SocketServer(server, {
     origin: "*",
   },
 });
-
+app.use(json());
 app.use(cors());
 app.use(morgan("dev"));
 
