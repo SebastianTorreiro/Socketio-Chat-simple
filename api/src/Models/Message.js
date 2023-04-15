@@ -6,9 +6,15 @@ const schema = new Schema(
       type: String,
       required: true,
     },
-    user: {
+    userFrom: {
       type: String,
     },
+    userTarget: {
+      type: String,
+    },
+    // userTarget: {
+    //   type: String,
+    // },
   },
   {
     timestamps: true,
