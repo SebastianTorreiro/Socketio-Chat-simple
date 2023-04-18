@@ -1,13 +1,17 @@
-import messageService from '../Service/Message.Service.js'
+import messageService from "../Service/Message.Service.js";
 
-const service = new messageService()
+const service = new messageService();
 
-export default function getAllMessagesFromOneUser(req, res){
-    const {userTarget, userFrom, content} = req.body
-    try {
-        
-    } catch (error) {
-        
-    }
-    res.json('funciona')
+export default async function getAllMessagesFromOneUser(req, res) {
+  const { userTarget, userFrom, content } = req.body;
+  try {
+    const mesaggeCreated = await service.createMessage(
+      userTarget,
+      userFrom,
+      content
+    );
+    res.status(202).json(mesaggeCreated);
+  } catch (error) {
+    res.json("error");
+  }
 }
