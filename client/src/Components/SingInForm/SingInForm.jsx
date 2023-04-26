@@ -63,7 +63,7 @@ const SignupForm = () => {
       return;
     }
 
-    // Aquí puedes enviar los datos del formulario al servidor para el registro
+    // enviar los datos del formulario al servidor para el registro
 
     // Reiniciar los campos y errores después de enviar los datos
     setEmail('');

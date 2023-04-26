@@ -18,7 +18,7 @@ const password = "wsdy450usdtLz89b";
 const uri = `mongodb+srv://sebastian:${password}@cluster0.ji8l9rz.mongodb.net/?retryWrites=true&w=majority`;
 
 const app = express();
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// const __dirname = dirname(fileURLToPath(import.meta.url));
 const server = http.createServer(app);
 const io = new SocketServer(server, {
   cors: {
