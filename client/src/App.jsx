@@ -8,7 +8,6 @@ import SignupForm from './Components/SingInForm/SingInForm';
 
 function App() {
   return (
-    <div className="container">
       <BrowserRouter>
           <Routes>
             <Route path="/" element={<Chat/>} />
@@ -16,7 +15,6 @@ function App() {
             <Route path='/singin' element={<SignupForm/>} />
           </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 
