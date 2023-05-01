@@ -1,10 +1,11 @@
 import User from "../Models/User.js";
 
 class UserService {
-  async createUser(email, password) {
+  async createUser( email, passwordHash, age, name ) {
     try {
-      const userCreated = new User({ password, email });
-      userCreated.save();
+      // console.log(email, password, age, name )
+      const userCreated = User.create({ password: passwordHash, age, name })
+      // userCreated.save();
       return userCreated;
     } catch (error) {
       return error;
