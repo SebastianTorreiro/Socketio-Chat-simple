@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { getUserLogin } from '../../Actions/actions'
+import { connect } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom'
 
-const LoginForm = () => {
 
-  const API = process.env.REACT_APP_API
-
+function LoginForm({ getUserLogin, error }) {
 
 
   const [input, setInput] = useState({
@@ -12,6 +13,7 @@ const LoginForm = () => {
     password: '',
   })
 
+  // const [error, setError] = useState(null)
 
   const handleInputChange = (e) => {
     setInput({
@@ -21,13 +23,19 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    // setError(null)
     e.preventDefault();
-    console.log(input)
+    // console.log(input)
     // Lógica de inicio de sesión aquí, puedes enviar los datos a un servidor para autenticación
-  //  const loginauthentication = await axios.post(API + '/', input)
+    try {
+      getUserLogin(input)
 
-    // Limpia los campos de formulario después del envío
-    
+    } catch (error) {
+      // setError(error)
+      // console.log('asd')
+    }
+
+
 
   };
 
@@ -39,6 +47,7 @@ const LoginForm = () => {
         <div className="mb-4">
           <label htmlFor="email" className="block font-semibold mb-2" >Email</label>
           <input
+            autoComplete={"off"}
             type="email"
             id="email"
             className="w-full px-3 py-2 rounded-md border-gray-300 focus:outline-none focus:border-indigo-500"
@@ -49,6 +58,7 @@ const LoginForm = () => {
         <div className="mb-4">
           <label htmlFor="password" className="block font-semibold mb-2"  >Contraseña</label>
           <input
+            autoComplete={"off"}
             type="password"
             id="password"
             className="w-full px-3 py-2 rounded-md border-gray-300 focus:outline-none focus:border-indigo-500"
@@ -56,6 +66,7 @@ const LoginForm = () => {
             value={input.password}
             onChange={handleInputChange} />
         </div>
+        {error ? <p className='text-red-500 font-bold my-2 border border-red-500 p-2'>{`* ${error}`}</p> : null}
         <button
           type="submit"
           className="w-full bg-indigo-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300">
@@ -66,5 +77,10 @@ const LoginForm = () => {
   );
 }
 
+const mapStateToProps = (state) =>{
+  return {
+    error: state.error
+  }
+}
 
-export default LoginForm;
+export default connect(mapStateToProps, { getUserLogin })(LoginForm)
