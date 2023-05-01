@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-const SignupForm = () => {
+import { connect } from 'react-redux';
+import {getUserRegistered} from '../../Actions/actions'
+import { useNavigate, Link } from 'react-router-dom'
+
+function SignupForm({ getUserRegistered }){
+
 
   const [input, setInput] = useState({
     email: '',
@@ -11,6 +16,7 @@ const SignupForm = () => {
   })
 
   const [error, setErrors] = useState([])
+  const history = useNavigate()
 
 
   const handleInputValueChange = (e) => {
@@ -58,7 +64,11 @@ const SignupForm = () => {
 
     validate(input)
     if (error.length === 0) {
-      axios.post('')
+      getUserRegistered(input);
+      history('/chat')
+    } else {
+      console.log('todavia hay errores')
+      return
     }
   }
   return (
@@ -127,4 +137,6 @@ const SignupForm = () => {
   );
 }
 
-export default SignupForm;
+
+
+export default connect(null,{ getUserRegistered })(SignupForm)
