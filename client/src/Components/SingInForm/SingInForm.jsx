@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import { connect } from 'react-redux';
-import {getUserRegistered} from '../../Actions/actions'
+import { getUserRegistered } from '../../Actions/actions'
 import { useNavigate, Link } from 'react-router-dom'
 
-function SignupForm({ getUserRegistered }){
+function SignupForm({ getUserRegistered }) {
 
 
   const [input, setInput] = useState({
     email: '',
     password: '',
     confirmPassword: '',
-    nombre: '',
-    edad: '',
+    name: '',
+    age: '',
   })
 
   const [error, setErrors] = useState([])
@@ -31,7 +31,7 @@ function SignupForm({ getUserRegistered }){
     setErrors([]);
 
     // Validar que todos los campos estén completos
-    if (!input.email || !input.password || !input.confirmPassword || !input.nombre || !input.edad) {
+    if (!input.email || !input.password || !input.confirmPassword || !input.name || !input.age) {
       setErrors(prevErrors => [...prevErrors, 'Por favor, completa todos los campos.']);
     }
 
@@ -51,7 +51,7 @@ function SignupForm({ getUserRegistered }){
       setErrors(prevErrors => [...prevErrors, 'Las contraseñas no coinciden.']);
     }
     // Validar edad como número positivo
-    const parsedEdad = parseInt(input.edad, 10);
+    const parsedEdad = parseInt(input.age, 10);
     if (isNaN(parsedEdad) || parsedEdad <= 0) {
 
       setErrors(prevErrors => [...prevErrors, 'Por favor, ingresa una edad válida.']);
@@ -59,12 +59,12 @@ function SignupForm({ getUserRegistered }){
 
   }
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     validate(input)
     if (error.length === 0) {
-      getUserRegistered(input);
+      const response = await getUserRegistered(input);
       history('/chat')
     } else {
       console.log('todavia hay errores')
@@ -81,8 +81,8 @@ function SignupForm({ getUserRegistered }){
             type="text"
             id="nombre"
             className="w-full px-3 py-2 rounded-md border-gray-300 focus:outline-none focus:border-indigo-500"
-            name='nombre'
-            value={input.nombre}
+            name='name'
+            value={input.name}
             onChange={handleInputValueChange} />
         </div>
         <div className="mb-4">
@@ -121,8 +121,8 @@ function SignupForm({ getUserRegistered }){
             type="number"
             id="edad"
             className="w-full px-3 py-2 rounded-md border-gray-300 focus:outline-none focus:border-indigo-500"
-            name='edad'
-            value={input.edad}
+            name='age'
+            value={input.age}
             onChange={handleInputValueChange} />
         </div>
         {error.length > 0 ? error.map((e) => <p className='text-red-500 font-bold my-2 border border-red-500 p-2'>{`* ${e}`}</p>) : null}
@@ -132,6 +132,9 @@ function SignupForm({ getUserRegistered }){
           onClick={handleSubmit}>
           Registrarse
         </button>
+        <p className="text-sm text-gray-500 mt-4 ml-4" >¿Ya tienes una cuenta? <Link to="/login" className="text-indigo-500 hover:text-indigo-600">Inicia sesión</Link></p>
+
+
       </form>
     </div>
   );
@@ -139,4 +142,4 @@ function SignupForm({ getUserRegistered }){
 
 
 
-export default connect(null,{ getUserRegistered })(SignupForm)
+export default connect(null, { getUserRegistered })(SignupForm)

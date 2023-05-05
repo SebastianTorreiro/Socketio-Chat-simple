@@ -5,15 +5,15 @@ import { connect } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom'
 
 
-function LoginForm({ getUserLogin, error }) {
+function LoginForm({ getUserLogin }) {
 
 
   const [input, setInput] = useState({
     email: '',
     password: '',
   })
-
-  // const [error, setError] = useState(null)
+  const history = useNavigate()
+  const [error, setError] = useState(null)
 
   const handleInputChange = (e) => {
     setInput({
@@ -28,11 +28,10 @@ function LoginForm({ getUserLogin, error }) {
     // console.log(input)
     // Lógica de inicio de sesión aquí, puedes enviar los datos a un servidor para autenticación
     try {
-      getUserLogin(input)
-
+      const esto = await getUserLogin(input)
+      history('/chat')
     } catch (error) {
-      // setError(error)
-      // console.log('asd')
+      setError(error.response.data.error)
     }
 
 
@@ -66,21 +65,21 @@ function LoginForm({ getUserLogin, error }) {
             value={input.password}
             onChange={handleInputChange} />
         </div>
+
         {error ? <p className='text-red-500 font-bold my-2 border border-red-500 p-2'>{`* ${error}`}</p> : null}
         <button
           type="submit"
           className="w-full bg-indigo-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300">
           Iniciar sesión
         </button>
+        <p className="text-sm text-gray-500 mt-4 ml-4">¿No tienes una cuenta? <Link to="/signup" className="text-indigo-500 hover:text-indigo-600">Regístrate</Link></p>
       </form>
     </div>
   );
 }
 
-const mapStateToProps = (state) =>{
-  return {
-    error: state.error
-  }
+const mapStateToProps = (state) => {
+  return {}
 }
 
 export default connect(mapStateToProps, { getUserLogin })(LoginForm)
