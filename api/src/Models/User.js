@@ -18,6 +18,9 @@ const schema = new Schema(
     age: {
       type: String,
     },
+    messageWith: {
+      type: String,
+    },
   },
   {
     timestamps: true,
