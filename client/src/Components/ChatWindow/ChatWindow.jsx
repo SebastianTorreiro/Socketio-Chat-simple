@@ -11,17 +11,23 @@ function ChatWindow({ user }) {
 
     useEffect(() => {
         async function fetchData(){
-            const res = await axios.get(process.env.REACT_APP_API + '/user/all')
-            setUsers(res.data)
+            try {
+                const res = await axios.get(process.env.REACT_APP_API + '/user/all')
+                setUsers(res.data)
+            } catch (error) {
+                console.log(error)
+            }
+            
         }
         fetchData()
     }, [])
 
+    console.log(users)
 
     return (
         <div className="flex bg-gray-100 h-screen">
             <div className="w-1/4 bg-gray-200 border-r">
-                <UserList setSelectedUser={setSelectedUser} selectedUser={selectedUser} users={users} />
+                <UserList setSelectedUser={setSelectedUser} selectedUser={selectedUser} users={users} user={user}/>
             </div>
             <div className="w-3/4 h-screen">
                 {selectedUser ? <Chat selectedUser={selectedUser} /> : null}
