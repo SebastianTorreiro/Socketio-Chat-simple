@@ -24,8 +24,7 @@ const schema = new Schema(
         ref: 'User'
       },
       lastMessage: {
-        type: Schema.Types.ObjectId,
-        ref: 'Message'
+        type: String
       }
     }]
   },

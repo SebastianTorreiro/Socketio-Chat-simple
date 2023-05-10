@@ -55,3 +55,12 @@ export async function getAllUsers(req, res) {
     res.status(404).json(error);
   }
 }
+
+export async function deleteAllUsers(req, res){
+  try {
+    const deletedUsers = await User.deleteMany({})
+    res.json('Todos los usuarios han sido eliminados')
+  } catch (error) {
+    res.json('No se pudieron eliminar los usuarios')
+  }
+}
