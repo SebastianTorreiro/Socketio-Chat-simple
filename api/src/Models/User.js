@@ -18,9 +18,16 @@ const schema = new Schema(
     age: {
       type: String,
     },
-    messageWith: {
-      type: String,
-    },
+    messageWith: [{
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      lastMessage: {
+        type: Schema.Types.ObjectId,
+        ref: 'Message'
+      }
+    }]
   },
   {
     timestamps: true,

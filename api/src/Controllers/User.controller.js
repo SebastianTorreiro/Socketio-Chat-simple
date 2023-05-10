@@ -50,8 +50,8 @@ export async function loginUser(req, res) {
 export async function getAllUsers(req, res) {
   try {
     const allUsers = await User.find({});
-    res.json(allUsers);
+    res.status(202).json(allUsers);
   } catch (error) {
-    res.json(error);
+    res.status(404).json(error);
   }
 }

@@ -5,7 +5,7 @@ import {
 } from "../Actions/constantes.js";
 
 const initialState = {
-  user: {},
+  user: null,
   error: "",
 };
 

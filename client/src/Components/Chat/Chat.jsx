@@ -12,6 +12,16 @@ function Chat({ selectedUser, user }) {
 
   useEffect(() => {
 
+    async function fetchData(){
+      const res = await axios.get(process.env.REACT_APP_API + `/messages/user/${user._id}/${selectedUser}`, )
+      console.log(res)
+      setMessages(res.data)
+    }
+    try {
+      fetchData()
+    } catch (error) {
+      console.log(error)
+    }
 
     const receiveMessage = msg => {
       console.log(msg)
@@ -22,7 +32,7 @@ function Chat({ selectedUser, user }) {
     return () => {
       socket.off('message', receiveMessage)
     }
-  }, [messages])
+  }, [selectedUser])
 
 
   const handleSubmit = (e) => {
@@ -71,8 +81,8 @@ function Chat({ selectedUser, user }) {
     <div className="flex flex-col h-full">
       <div className="overflow-y-auto flex-grow p-4">
         {messages?.map((m, i) => (
-          <div key={i} className={`w-2/3 rounded-lg px-4 py-2 mb-2 ${m.from === "me" ? 'bg-blue-600 text-white self-end' : 'bg-gray-200 text-gray-700 self-start'}`}>
-            <p>{m.body}</p>
+          <div key={i} className={`w-2/3 rounded-lg px-4 py-2 mb-2 ${m.userFrom === user._id ? 'bg-blue-600 text-white self-end' : 'bg-gray-200 text-gray-700 self-start'}`}>
+            <p>{m.content}</p>
           </div>
         ))}
       </div>

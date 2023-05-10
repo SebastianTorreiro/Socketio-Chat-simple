@@ -7,14 +7,13 @@ const schema = new Schema(
       required: true,
     },
     userFrom: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
     userTarget: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
-    // userTarget: {
-    //   type: String,
-    // },
   },
   {
     timestamps: true,

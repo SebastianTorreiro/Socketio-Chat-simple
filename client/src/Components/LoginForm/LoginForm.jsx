@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import { getUserLogin } from '../../Actions/actions'
 import { connect } from 'react-redux';
@@ -28,14 +28,11 @@ function LoginForm({ getUserLogin }) {
     // console.log(input)
     // Lógica de inicio de sesión aquí, puedes enviar los datos a un servidor para autenticación
     try {
-      const esto = await getUserLogin(input)
+      const needAwait = await getUserLogin(input)
       history('/chat')
     } catch (error) {
       setError(error.response.data.error)
     }
-
-
-
   };
 
 

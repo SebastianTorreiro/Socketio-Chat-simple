@@ -6,20 +6,21 @@ import SignupForm from './Components/SingInForm/SingInForm';
 import Welcome from './Components/Welcome/Welcome';
 // import { ProtectedRoute } from "./components/ProtectedRoute";
 import { connect } from 'react-redux';
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import ChatWindow from './Components/ChatWindow/ChatWindow';
 
 function App({ user }) {
   return (
-      <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Welcome/>} />
-            <Route path='/login' element={<LoginForm/>} />
-            <Route path='/signup' element={<SignupForm/>} />
-            <Route element={<ProtectedRoute isAllowed={!!user} />}>
-            <Route path='/chat' element={<Chat/>} />
-            </Route>
-          </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path='/login' element={<LoginForm />} />
+        <Route path='/signup' element={<SignupForm />} />
+        <Route element={<ProtectedRoute isAllowed={!!user} />}>
+          <Route path='/chat' element={<ChatWindow />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
@@ -29,4 +30,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {  })(App)
+export default connect(mapStateToProps, {})(App)
