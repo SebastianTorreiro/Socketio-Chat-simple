@@ -8,13 +8,13 @@ function Chat({ selectedUser, user }) {
 
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
-
+console.log(user)
 
   useEffect(() => {
 
     async function fetchData(){
       const res = await axios.get(process.env.REACT_APP_API + `/messages/user/${user._id}/${selectedUser}`, )
-      console.log(res)
+      // console.log(res)
       setMessages(res.data)
     }
     try {
@@ -77,36 +77,64 @@ function Chat({ selectedUser, user }) {
   //   </div>
   // );
 
-  return (
-    <div className="flex flex-col h-full">
-      <div className="overflow-y-auto flex-grow p-4">
-        {messages?.map((m, i) => (
-          <div key={i} className={`w-2/3 rounded-lg px-4 py-2 mb-2 ${m.userFrom === user._id ? 'bg-blue-600 text-white self-end' : 'bg-gray-200 text-gray-700 self-start'}`}>
-            <p>{m.content}</p>
-          </div>
-        ))}
-      </div>
-      <form onSubmit={handleSubmit} className="flex-shrink-0">
-        <div className="flex">
-          <input
-            className="border border-gray-300 rounded-md p-2 w-full"
-            type="text"
-            value={message}
-            onChange={e => setMessage(e.target.value)}
-            placeholder="Escribe un mensaje..."
-          />
-          <button
-            className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full ml-2"
-            type="submit"
-          >
-            Enviar
-          </button>
+//   return (
+//     <div className="flex flex-col h-full">
+//       <div className="overflow-y-auto flex-grow p-4">
+//         {messages?.map((m, i) => (
+//           <div key={i} className={`w-2/3 rounded-lg px-4 py-2 mb-2 ${m.userFrom._id === user._id ? 'bg-blue-600 text-white self-end' : 'bg-gray-200 text-gray-700 self-start'}`}>
+//             <p>{m.content}</p>
+//           </div>
+//         ))}
+//       </div>
+//       <form onSubmit={handleSubmit} className="flex-shrink-0">
+//         <div className="flex">
+//           <input
+//             className="border border-gray-300 rounded-md p-2 w-full"
+//             type="text"
+//             value={message}
+//             onChange={e => setMessage(e.target.value)}
+//             placeholder="Escribe un mensaje..."
+//           />
+//           <button
+//             className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full ml-2"
+//             type="submit"
+//           >
+//             Enviar
+//           </button>
+//         </div>
+//       </form>
+//     </div>
+//   )
+// }
+return (
+  <div className="flex flex-col h-full">
+    <div className="overflow-y-auto flex-grow p-4">
+      {messages?.map((m, i) => (
+        <div key={i} className={`w-2/3 rounded-lg px-4 py-2 mb-2 ${m.userFrom._id === user._id ? 'bg-blue-600 text-white self-end ml-auto' : 'bg-gray-200 text-gray-700 self-start mr-auto'}`}>
+          <p>{m.content}</p>
         </div>
-      </form>
+      ))}
     </div>
-  )
-}
-
+    <form onSubmit={handleSubmit} className="flex-shrink-0">
+      <div className="flex">
+        <input
+          className="border border-gray-300 rounded-md p-2 w-full"
+          type="text"
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          placeholder="Escribe un mensaje..."
+        />
+        <button
+          className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full ml-2"
+          type="submit"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+  </div>
+)
+      }
 const mapStateToProps = (state) => {
   return {
     user: state.user

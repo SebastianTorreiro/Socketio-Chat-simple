@@ -1,22 +1,48 @@
 import messageService from "../Service/Message.Service.js";
 import Message from "../Models/Message.js";
+import User from "../Models/User.js";
 const service = new messageService();
 
 export async function createMessage(req, res) {
   const { userTarget, userFrom, content } = req.body;
-  console.log( userTarget, userFrom, content )
-  try {
-    const mesaggeCreated = await Message.create({
-      userTarget,
-      userFrom,
-      content
-    });
-    mesaggeCreated.save()
+  // console.log( userTarget, userFrom, content )
+  // try {
+  //   const mesaggeCreated = await Message.create({
+  //     userTarget,
+  //     userFrom,
+  //     content
+  //   });
+  //   mesaggeCreated.save()
+  //   await User.findOneAndUpdate(
+  //     { _id: userFrom },
+  //     {
+  //       $addToSet: {
+  //         messageWith: {
+  //           user: userTarget,
+  //           lastMessage: content,
+  //         },
+  //       },
+  //     }
+  //   );
+  //   await User.findOneAndUpdate(
+  //     { _id: userTarget },
+  //     {
+  //       $addToSet: {
+  //         messageWith: {
+  //           user: userFrom,
+  //           lastMessage: content,
+  //         },
+  //       },
+  //     }
+  //   );
+
+  
+
     res.status(202).json(mesaggeCreated);
-  } catch (error) {
-    console.log(error)
-    res.json("error");
-  }
+  // } catch (error) {
+  //   console.log(error)
+  //   res.json("error");
+  // }
 }
 
 export async function getAllMessagesFromOneUser(req, res){
