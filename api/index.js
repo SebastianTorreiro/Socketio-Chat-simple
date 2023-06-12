@@ -30,12 +30,10 @@ app.use(cors());
 app.use(morgan("dev"));
 
 io.on("connection", (socket) => {
+    console.log('Cliente Conectado')
   socket.on("message", (message) => {
     console.log(message);
-    socket.broadcast.emit("message", {
-      body: message,
-      from: socket.id,
-    });
+    socket.broadcast.emit("message", message);
   });
 });
 

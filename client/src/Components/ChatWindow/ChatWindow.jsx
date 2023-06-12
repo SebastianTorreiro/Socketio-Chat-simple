@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserList from "../UserList/UserList";
 import Chat from "../Chat/Chat";
+import Zhat from '../Chat/Zhat';
 import axios from "axios";
 import { connect } from 'react-redux';
 
@@ -22,7 +23,7 @@ function ChatWindow({ user }) {
         fetchData()
     }, [])
 
-    console.log(users)
+    // console.log(users)
 
     return (
         <div className="flex bg-gray-100 h-screen">
