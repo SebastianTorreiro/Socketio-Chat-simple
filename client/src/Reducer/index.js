@@ -1,6 +1,6 @@
 import {
-  GET_USER_REGISTERED,
-  GET_USER_LOGIN,
+  CREATE_USER,
+  REGISTER_USER,
   SET_ERROR_TRUE,
 } from "../Actions/constantes.js";
 
@@ -11,13 +11,13 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_USER_REGISTERED: {
+    case CREATE_USER: {
       return {
         ...state,
         user: action.payload,
       };
     }
-    case GET_USER_LOGIN: {
+    case REGISTER_USER: {
       return {
         ...state,
         user: action.payload,

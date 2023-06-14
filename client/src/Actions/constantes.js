@@ -1,4 +1,4 @@
-export const GET_USER_REGISTERED = "GET_USER_REGISTERED";
-export const GET_USER_LOGIN = "GET_USER_LOGIN";
+export const CREATE_USER = "CREATE_USER";
+export const REGISTER_USER = "REGISTER_USER";
 export const SET_ERROR_TRUE = "SET_ERROR_TRUE";
 
