@@ -1,21 +1,19 @@
+import cors from "cors";
+import dotenv from "dotenv";
 import express, { json } from "express";
+import http from "http";
+import mongoose from "mongoose";
 import morgan from "morgan";
 import { Server as SocketServer } from "socket.io";
-import http, { maxHeaderSize } from "http";
-import cors from "cors";
-import { PORT } from "./config.js";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
-import mongoose from "mongoose";
+import { PORT, DB_PASSWORD } from "./config.js";
 import router from "./src/Routes/index.js";
-// import { config } from "dotenv";
-// import { DB_PASSWORD } from "./config.js";
 
 // import connection  from "./src/Database/index.js"
 
-const password = "wsdy450usdtLz89b";
+// const password = "wsdy450usdtLz89b";
+console.log(DB_PASSWORD)
 
-const uri = `mongodb+srv://sebastian:${password}@cluster0.ji8l9rz.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://sebastian:${DB_PASSWORD}@cluster0.ji8l9rz.mongodb.net/?retryWrites=true&w=majority`;
 
 const app = express();
 // const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -30,7 +28,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 io.on("connection", (socket) => {
-    console.log('Cliente Conectado')
+  console.log("Cliente Conectado");
   socket.on("message", (message) => {
     console.log(message);
     socket.broadcast.emit("message", message);
@@ -44,6 +42,7 @@ app.use("/", router);
 server.listen(PORT, async () => {
   try {
     console.log("server start", PORT);
+    dotenv.config();
     console.log(uri);
     await mongoose.connect(uri, {
       useNewUrlParser: true,
