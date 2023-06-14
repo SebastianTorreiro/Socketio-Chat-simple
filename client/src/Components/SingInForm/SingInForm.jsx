@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { getUserRegistered } from '../../Actions/actions'
+import { createUser } from '../../Actions/actions'
 import { useNavigate, Link } from 'react-router-dom'
 
-function SignupForm({ getUserRegistered }) {
+function SignupForm({ createUser }) {
 
 
   const [input, setInput] = useState({
@@ -15,7 +15,7 @@ function SignupForm({ getUserRegistered }) {
     age: '',
   })
 
-  const [error, setErrors] = useState([])
+  let [error, setErrors] = useState()
   const history = useNavigate()
 
 
@@ -27,50 +27,51 @@ function SignupForm({ getUserRegistered }) {
   }
 
   function validate(input) {
-
-    setErrors([]);
+    const errors = [];
 
     // Validar que todos los campos estén completos
     if (!input.email || !input.password || !input.confirmPassword || !input.name || !input.age) {
-      setErrors(prevErrors => [...prevErrors, 'Por favor, completa todos los campos.']);
+      errors.push('Por favor, completa todos los campos.')
     }
 
     // Validar el formato de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(input.email)) {
 
-      setErrors(prevErrors => [...prevErrors, 'Por favor, ingresa un email válido.']);
+      errors.push('Por favor, ingresa un email válido.');
     }
     // Validar longitud de contraseña
     if (input.password.length < 8) {
-      setErrors(prevErrors => [...prevErrors, 'La contraseña debe tener al menos 8 caracteres.']);
+      errors.push('La contraseña debe tener al menos 8 caracteres.');
     }
     // Validar coincidencia de contraseña y confirmación de contraseña
     if (input.password !== input.confirmPassword) {
 
-      setErrors(prevErrors => [...prevErrors, 'Las contraseñas no coinciden.']);
+      errors.push('Las contraseñas no coinciden.');
     }
     // Validar edad como número positivo
     const parsedEdad = parseInt(input.age, 10);
     if (isNaN(parsedEdad) || parsedEdad <= 0) {
 
-      setErrors(prevErrors => [...prevErrors, 'Por favor, ingresa una edad válida.']);
+      errors.push('Por favor, ingresa una edad válida.');
     }
-
+    return errors
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    validate(input)
-    if (error.length === 0) {
-      const response = await getUserRegistered(input);
-      history('/chat')
+    const validationErrors = validate(input);
+    if (validationErrors.length === 0) {
+      const response = await createUser(input);
+      history('/chat');
     } else {
-      console.log('todavia hay errores')
-      return
+      setErrors(validationErrors);
     }
-  }
+  };
+
+
+  // }
   return (
     <div className="flex justify-center items-center min-h-screen bg-zinc-800">
       <form onSubmit={handleSubmit} className="w-full max-w-xs bg-white p-8 rounded-lg shadow-md">
@@ -125,7 +126,7 @@ function SignupForm({ getUserRegistered }) {
             value={input.age}
             onChange={handleInputValueChange} />
         </div>
-        {error.length > 0 ? error.map((e) => <p className='text-red-500 font-bold my-2 border border-red-500 p-2'>{`* ${e}`}</p>) : null}
+        {error?.length > 0 ? error?.map((e) => <p className='text-red-500 font-bold my-2 border border-red-500 p-2'>{`* ${e}`}</p>) : null}
         <button
           type="submit"
           className="w-full bg-indigo-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
@@ -142,4 +143,4 @@ function SignupForm({ getUserRegistered }) {
 
 
 
-export default connect(null, { getUserRegistered })(SignupForm)
+export default connect(null, { createUser })(SignupForm)

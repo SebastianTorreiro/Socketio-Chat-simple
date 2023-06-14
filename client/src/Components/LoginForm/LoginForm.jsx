@@ -1,11 +1,11 @@
 import { useState } from "react";
 import axios from 'axios';
-import { getUserLogin } from '../../Actions/actions'
+import { registerUser } from '../../Actions/actions'
 import { connect } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom'
 
 
-function LoginForm({ getUserLogin }) {
+function LoginForm({ registerUser }) {
 
 
   const [input, setInput] = useState({
@@ -28,7 +28,7 @@ function LoginForm({ getUserLogin }) {
     // console.log(input)
     // Lógica de inicio de sesión aquí, puedes enviar los datos a un servidor para autenticación
     try {
-      const needAwait = await getUserLogin(input)
+      const needAwait = await registerUser(input)
       history('/chat')
     } catch (error) {
       setError(error.response.data.error)
@@ -79,4 +79,4 @@ const mapStateToProps = (state) => {
   return {}
 }
 
-export default connect(mapStateToProps, { getUserLogin })(LoginForm)
+export default connect(mapStateToProps, { registerUser })(LoginForm)
