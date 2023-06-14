@@ -1,8 +1,10 @@
-// import express from "express";
-// const router = express.Router()
-// import createUser from '../Controllers/User.controller.js'
+import express from "express";
+import { createUser, loginUser } from "../Controllers/Authentication.controller.js";
+const router = express.Router()
 
-// router.post('/create', createUser)
 
-// router.post('/login', loginUser);
-// export default router
+router.post('/login', loginUser);
+
+router.post('/singup', createUser);
+
+export default router
