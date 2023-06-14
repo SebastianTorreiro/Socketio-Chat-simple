@@ -1,5 +1,5 @@
 import cors from "cors";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv"
 import express, { json } from "express";
 import http from "http";
 import mongoose from "mongoose";
@@ -8,15 +8,11 @@ import { Server as SocketServer } from "socket.io";
 import { PORT, DB_PASSWORD } from "./config.js";
 import router from "./src/Routes/index.js";
 
-// import connection  from "./src/Database/index.js"
 
-// const password = "wsdy450usdtLz89b";
-console.log(DB_PASSWORD)
-
-const uri = `mongodb+srv://sebastian:${DB_PASSWORD}@cluster0.ji8l9rz.mongodb.net/?retryWrites=true&w=majority`;
+dotenv.config()
+const uri = `mongodb+srv://sebastian:${process.env.DB_PASSWORD}@cluster0.ji8l9rz.mongodb.net/?retryWrites=true&w=majority`;
 
 const app = express();
-// const __dirname = dirname(fileURLToPath(import.meta.url));
 const server = http.createServer(app);
 const io = new SocketServer(server, {
   cors: {
@@ -39,11 +35,9 @@ io.on("connection", (socket) => {
 
 app.use("/", router);
 
-server.listen(PORT, async () => {
+server.listen(process.env.PORT, async () => {
   try {
-    console.log("server start", PORT);
-    dotenv.config();
-    console.log(uri);
+    console.log("server start", process.env.PORT);
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
