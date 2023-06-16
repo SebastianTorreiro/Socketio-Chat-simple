@@ -15,3 +15,10 @@ export const tokenSign = async (user) =>{
     )
 }
 
+export const verifyToken = async (token) =>{
+    try {
+        return jwt.verify(token, process.env.JWT_SECRET)
+    } catch (e) {
+        return null
+    }
+}
